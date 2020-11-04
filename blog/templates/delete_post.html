@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block title %} Delete Post {% endblock title %}
+{% block content %}
+
+        {% if user.is_authenticated %}
+            {% if user.id == post.author.id %}  
+                <h1>Delete Post</h1>
+                <br><br>
+                <h3> Delete: {{ post.title }}</h3>
+
+                <br>
+                <div class="form-group">
+                    <form method="POST">
+                        {% csrf_token %}
+                        <strong>Are you sure to delete?</strong> <br> <br>
+                        <button class="btn btn-primary"> Delete Post! </button>
+                    </form>
+                </div>
+            {% else %}
+                <h2>Unfortunately this page cannot be accesed !</h2>
+            {% endif %}
+
+        {% else %}
+            <h2>Unfortunately this page cannot be accesed !</h2>
+        {% endif %}
+        <br> <br>
+{% endblock %}

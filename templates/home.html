@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+						
+					
+	<!-- Review section -->
+	<section class="review-section">
+		<div class="container">
+			
+			<div class="review-item">
+				<div class="row">
+					{% for post in object_list  %}
+					<div class="col-lg-4">
+						<div class="review-pic">
+							<a href=" {% url 'post-detail' post.pk %}"><img src="{{ post.header_image.url }}" alt="">
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="review-content text-box text-white">
+							<ul>
+								<li><h3> <a href=" {% url 'post-detail' post.pk %}"> {{ post.title }} </a> </h3></li>
+							
+							<h4> Posted By: {{ post.author }} | Date Posted: {{ post.post_date }} <br>
+								<a href="{% url 'category' post.category %}">Categroy: {{ post.category }}</a> |
+								<a href="{% url 'update_post' post.pk %}">Edit Post</a> |
+							 <a href="{% url 'delete_post' post.pk %}">Delete Post</a></h4> 
+							<br>
+							<p>{{ post.body }}</p>
+							<h4><a href="{{ post.file.url }}" class="button">Download file</a></h4>
+							<br>
+							<hr>
+							</ul>
+						
+							
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end-->
+
+
+	<!-- Newsletter section -->
+	<section class="newsletter-section">
+		<div class="container">
+			<h2>Subscribe to our newsletter</h2>
+			<form class="newsletter-form">
+				<input type="text" placeholder="ENTER YOUR E-MAIL">
+				<button class="site-btn">subscribe  <img src="img/icons/double-arrow.png" alt="#"/></button>
+			</form>
+		</div>
+	</section>
+	<!-- Newsletter section end -->
+	
+	
+
+{% endblock content %}
+

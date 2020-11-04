@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Make A Comment Here {% endblock title %}
+{% block content %}
+        
+{% if user.is_authenticated %}
+    <h1>Create Comment ... </h1>
+    <br>
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-warning"> Add Comment... </button>
+        </form>
+    </div>
+{% else %}
+    <h4>Please <a href="{% url 'register' %}">Register</a> OR <a href="{% url 'login' %}">Login</a> to Like Or Comment</h4>
+{% endif %}
+
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("user").value = name;
+    </script>
+
+    <br> 
+    <br>
+
+{% endblock %}

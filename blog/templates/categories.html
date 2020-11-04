@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+
+{% if category_posts %}
+    
+
+    <h1>{{ cats }} </h1>
+
+    <ul>
+    {% for post in category_posts %} <br> <br>
+        <li> <h3><a href="{% url 'blog-detail' post.pk %}"> {{ post.title}}  </h3></a> 
+    
+        <br>
+        Posted By: {{ post.author }} | {{ post.post_date}} |
+        <br> <br>
+        <div class="col-lg-4">
+            <div class="review-pic">
+                <a href=" {% url 'blog-detail' post.pk %}"><img src="{{ post.header_image.url }}" alt="">
+            </div>
+        </div>
+        <br> <br>
+        {{ post.body|slice:":200"|safe }}
+        <br>
+        <hr>
+        </li>  
+    {% endfor %}
+    </ul>  
+    
+
+{% else %}
+    <h2>Sorry, this category has no posts yet!</h2>
+
+    <br> <br>
+
+{% endif %}
+<br> <br>
+
+{% endblock content %}

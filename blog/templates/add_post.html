@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Create a new post {% endblock title %}
+{% block content %}
+     
+{% if user.is_authenticated %}
+    <h1>Create A Post ... </h1>
+    <br>
+    <div class="form-group">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form.media }}
+            {{ form.as_p }}
+            <button class="btn btn-warning"> Post Now ... </button>
+        </form>
+    </div>
+    {% else %}
+    <h2>Unfortunately this page cannot be accesed !</h2>
+{% endif %}
+
+
+    <script>
+        var name = "{{ user.id }}";
+        document.getElementById("user").value = name;
+    </script>
+
+    <br> 
+    <br>
+
+{% endblock %}

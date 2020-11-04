@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+	<!-- Review section -->
+	<section class="review-section">
+		<div class="container">
+			
+			<div class="review-item">
+				<div class="row">
+					{% for post in object_list  %}
+					<div class="col-lg-4">
+						<div class="review-pic">
+							<a href=" {% url 'blog-detail' post.pk %}"><img src="{{ post.header_image.url }}" alt="">
+						</div>
+					</div>
+					<div class="col-lg-8">
+						<div class="review-content text-box text-white">
+							<ul>
+								<li><h3> <a href=" {% url 'blog-detail' post.pk %}"> {{ post.title }} </a> </h3></li>
+							
+							<h4> Posted By: {{ post.author }} | Date Posted: {{ post.post_date }} <br>
+								<a href="{% url 'category' post.category|slugify %}">Categroy: {{ post.category }}</a> 
+								{% if user.is_authenticated %}
+									{% if user.id == post.author.id %}
+										|<a href="{% url 'update_post' post.pk %}">Edit Post</a> |
+										<a href="{% url 'delete_post' post.pk %}">Delete Post</a>
+									{% endif %}
+								{% endif %}
+							</h4> 
+							<br>
+							<p>{{ post.body|safe|truncatewords:5}}</p>
+							<p><a href=" {% url 'blog-detail' post.pk %}" class="btn btn-primary btn-outline-primary btn-sm">Read
+								More</a></p>
+							
+							
+							<hr>
+							</ul>
+
+						</div>
+					</div>
+					{% endfor %}
+
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Review section end-->
+
+
+{% endblock content %}
+
+
+	
+

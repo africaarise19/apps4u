@@ -1,0 +1,10 @@
+{% autoescape off %}
+
+    Hi {{ user.username }},
+    Please find and click the link below to verify your account, thank you !
+
+    Note: You're seeing this message because you have signed up on apps4u.com.
+
+    http://{{domain}}{% url 'activate' uidb64=uid token=token %}
+
+{% endautoescape %}

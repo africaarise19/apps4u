@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Create A New Category {% endblock title %}
+{% block content %}
+
+    {% if user.is_authenticated %}
+        
+            <h1>Add Category ... </h1>
+            <br>
+            <div class="form-group">
+                <form method="POST" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ form.media }}
+                    {{ form.as_p }}
+                    <button class="btn btn-warning"> Add Category </button>
+                </form>
+            </div>
+
+    {% else %}
+        <h2>Unfortunately this page cannot be accesed !</h2>
+    {% endif %}
+
+    <br> 
+    <br>
+
+{% endblock %}

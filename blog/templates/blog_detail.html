@@ -1,0 +1,110 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %}
+	{{post.title_tag}}
+{% endblock title %}
+	
+
+{% block content %}
+
+	<!-- Games section -->			
+	<h3 class="gs-title">{{ post.title }}</h4> <br>
+	<div class="gs-meta">In <a href="{% url 'category' post.category %}">{{ post.category }}  Category</a></div>
+	<p class="gs-title">Posted By: {{ post.author }} | Date Posted: {{ post.post_date}} | 
+		{% if user.is_authenticated %}
+			{% if user.id == post.author.id %}
+				<a href="{% url 'update_post' post.pk %} ">Edit Post</a> |
+				<a href="{% url 'delete_post' post.pk %}">Delete Post</a> </p>
+			{% endif %}
+		{% endif %}
+	<section class="games-single-page">
+		<div class="container">
+			
+			{% if post.header_image %}
+				<div class="game-single-preview">
+					<img src="{{ post.header_image.url }}">
+				</div>
+			{% endif %}
+			<br>
+			<div class="row">
+				<div class="col-xl-9 col-lg-8 col-md-7 game-single-content">
+					
+					<p>{{ post.body|safe }} </p>
+					<h4 style="text-align: center;"><a href="{{ post.video_url }}" class="btn btn-primary">Watch How To Install (Video)</a></h4>
+					<br>
+					<h4 style="text-align: center;"><a href="{{ post.file }}" class="btn btn-primary"> Download Software</a> </h4>
+					
+					<hr>
+					<div class="geme-social-share pt-5 d-flex">
+						<h4>Spread The Love - SHARE:</h4>
+
+						<a href="https://wa.me/?text=apps4u.net%20:%20I%20this%20amazing%20site%20for%20you,%20its%20packed%20full%20with%20free%20softwares/" class="section-btn btn btn-default smoothScroll"><i class="fa fa-whatsapp"></i></a>
+						<a href="http://www.facebook.com/sharer/sharer.php?u=http://apps4u.net{{ request.get_full_path|urlencode }}"><i class="fa fa-facebook"></i></a>
+						<a href="https://twitter.com/intent/tweet?source=webclient&text=check+out,+i+recomment+this+site:+apps4u.com"><i class="fa fa-twitter"></i></a>
+						<a href="http://www.linkedin.com/shareArticle?url=http://apps4u.com{{ request.get_full_path|urlencode }}&title=<your title>&summary=<your desc>&source=http://apps4u.net"><i class="fa fa-linkedin"></i></a>						
+					</div>
+					<br>
+					<form action="{% url 'like_post' post.pk %}" method="POST">
+						{% csrf_token %}
+						<button class="btn btn-primary btn-small">{{ total_likes }} like{{ total_likes|pluralize }} </button> 
+						
+					{% if user.is_authenticated %}
+						{% if liked %}
+
+							<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-danger btn-small">Unlike</button>
+						{% else %}
+							<button type="submit", name="post_id", value="{{ post.id }}", class="btn btn-primary btn-small">Like</button>
+
+						{% endif %}
+					{% else %}	
+					
+						<h5> <a href="{% url 'register' %}">Register</a> OR <a href="{% url 'login' %}">Login</a> to Like Or Comment</h5>
+					{% endif %}
+					
+							 
+					</form>
+					<br>
+					<a href="#" class="btn btn-primary">COMMENTS... </a>
+					<a href="{% url 'add_comment' post.pk %}" class="btn btn-primary">ADD COMMENT ... </a>
+
+					
+					{% if not post.comments.all %}
+					<h5>Leave a Comment if you have a request for new Apps ... <a href=" {% url 'add_comment' post.pk %}">Comment Here</a> </h5>
+					{% else %}
+						
+						{% for comment in post.comments.all  %}
+						 <hr>
+						<h4>
+							{{ comment.name }} |
+							{{ comment.date_added}}
+						</h4>
+						<br>
+						<p>{{ comment.body }}</p>
+
+						{% endfor %}
+
+					{% endif %}
+					
+					<hr>
+					<a href="{% url 'add_comment' post.pk %}" class="btn btn-primary">ADD COMMENT ... </a>
+
+					<div class="geme-social-share pt-5 d-flex">
+						<h4>Spread The Love - SHARE:</h4>
+
+						<a href="https://wa.me/?text=apps4u.net%20:%20I%20this%20amazing%20site%20for%20you,%20its%20packed%20full%20with%20free%20softwares/" class="section-btn btn btn-default smoothScroll"><i class="fa fa-whatsapp"></i></a>
+						<a href="http://www.facebook.com/sharer/sharer.php?u=http://apps4u.net{{ request.get_full_path|urlencode }}"><i class="fa fa-facebook"></i></a>
+						<a href="https://twitter.com/intent/tweet?source=webclient&text=check+out,+i+recomment+this+site:+apps4u.com"><i class="fa fa-twitter"></i></a>
+						<a href="http://www.linkedin.com/shareArticle?url=http://apps4u.com{{ request.get_full_path|urlencode }}&title=<your title>&summary=<your desc>&source=http://apps4u.net"><i class="fa fa-linkedin"></i></a>						
+					</div>
+					<br>
+					<a href=" {% url 'home' %}" class="btn btn-primary">Back Home</a>
+                
+			</div>
+		</div>
+	</div>
+	</section>
+	<!-- Games end-->
+{% endblock content %}
+	
